@@ -1,9 +1,9 @@
 package com.pik.saga;
 
-import com.pik.command.ChangeUserPasswordCommand;
-import com.pik.event.PasswordResetEvent;
-import com.pik.event.UserChangePasswordEvent;
+import com.pik.password.event.PasswordResetEvent;
 import com.pik.repository.PasswordTokenCrudRepository;
+import com.pik.user.command.ChangeUserPasswordCommand;
+import com.pik.user.event.UserChangePasswordEvent;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.EndSaga;
 import org.axonframework.modelling.saga.SagaEventHandler;
@@ -17,9 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ResetPasswordSaga {
     @Autowired
     private transient CommandGateway commandGateway;
-
-    @Autowired
-    private transient PasswordTokenCrudRepository passwordTokenCrudRepository;
 
     @Autowired
     private transient PasswordEncoder passwordEncoder;
@@ -36,7 +33,5 @@ public class ResetPasswordSaga {
     @SagaEventHandler(associationProperty = "userId")
     public void on(UserChangePasswordEvent event) {
         System.out.println("Saga reset password step 2 - end of saga");
-        passwordTokenCrudRepository.findByUserId(event.userId)
-                .ifPresent(passwordToken -> passwordTokenCrudRepository.deleteById(passwordToken.getId()));
     }
 }

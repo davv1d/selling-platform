@@ -1,5 +1,9 @@
 package com.pik.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class User {
     @Id
     @Column(name = "ID", nullable = false)
@@ -17,30 +24,4 @@ public class User {
     private String password;
     @Column(name = "STATUS", length = 20, nullable = false)
     private String status;
-
-    public User() {
-    }
-
-    public User(String id, String email, String password, String status) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.status = status;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getStatus() {
-        return status;
-    }
 }

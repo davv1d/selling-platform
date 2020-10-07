@@ -10,8 +10,7 @@ version '1.0-SNAPSHOT'
 mainClassName = 'com.pik.UserPasswordResetServiceApplication'
 
 dependencies {
-    compile project(':user-common-api')
-
+    compile project(':common-api')
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.3.4.RELEASE'
 
@@ -27,5 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'com.h2database:h2'
 
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }

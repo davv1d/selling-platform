@@ -1,13 +1,15 @@
 package com.pik.aggregate;
 
-import com.pik.command.ActivateUserCommand;
-import com.pik.command.ChangeUserPasswordCommand;
-import com.pik.command.CreateUserCommand;
-import com.pik.command.DeactivateUserCommand;
-import com.pik.event.UserActivatedEvent;
-import com.pik.event.UserChangePasswordEvent;
-import com.pik.event.UserCreatedEvent;
-import com.pik.event.UserDeactivatedEvent;
+import com.pik.user.UserStatus;
+import com.pik.user.command.ActivateUserCommand;
+import com.pik.user.command.ChangeUserPasswordCommand;
+import com.pik.user.command.CreateUserCommand;
+import com.pik.user.command.DeactivateUserCommand;
+import com.pik.user.event.UserActivatedEvent;
+import com.pik.user.event.UserChangePasswordEvent;
+import com.pik.user.event.UserCreatedEvent;
+import com.pik.user.event.UserDeactivatedEvent;
+import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -16,9 +18,11 @@ import org.axonframework.spring.stereotype.Aggregate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.pik.aggregate.UserStatus.*;
+import static com.pik.user.UserStatus.*;
+
 
 @Aggregate
+@NoArgsConstructor
 public class UserAggregate {
     @AggregateIdentifier
     private String userId;
@@ -26,9 +30,6 @@ public class UserAggregate {
     private String password;
     private UserStatus status;
     private final transient Logger logger = LoggerFactory.getLogger(UserAggregate.class);
-
-    public UserAggregate() {
-    }
 
     @CommandHandler
     public UserAggregate(CreateUserCommand command) {
@@ -85,5 +86,4 @@ public class UserAggregate {
     protected void on(UserChangePasswordEvent event) {
         this.password = event.password;
     }
-
 }

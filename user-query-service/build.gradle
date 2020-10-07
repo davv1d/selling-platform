@@ -10,8 +10,7 @@ version '1.0-SNAPSHOT'
 mainClassName = 'com.pik.UserQueryServiceApplication'
 
 dependencies {
-    compile project(':user-common-api')
-
+    compile project(':common-api')
     compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '4.4.2'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
@@ -23,5 +22,7 @@ dependencies {
     }
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }

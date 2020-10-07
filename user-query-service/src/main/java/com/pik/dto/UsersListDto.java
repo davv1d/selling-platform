@@ -1,22 +1,16 @@
 package com.pik.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class UsersListDto {
     private List<UserDto> users;
-
-    public UsersListDto() {
-    }
-
-    public UsersListDto(List<UserDto> users) {
-        this.users = users;
-    }
-
-    public List<UserDto> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserDto> users) {
-        this.users = users;
-    }
 }

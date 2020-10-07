@@ -1,13 +1,14 @@
 package com.pik.aggregate;
 
-import com.pik.command.ActivateUserCommand;
-import com.pik.command.ChangeUserPasswordCommand;
-import com.pik.command.CreateUserCommand;
-import com.pik.command.DeactivateUserCommand;
-import com.pik.event.UserActivatedEvent;
-import com.pik.event.UserChangePasswordEvent;
-import com.pik.event.UserCreatedEvent;
-import com.pik.event.UserDeactivatedEvent;
+import com.pik.user.UserStatus;
+import com.pik.user.command.ActivateUserCommand;
+import com.pik.user.command.ChangeUserPasswordCommand;
+import com.pik.user.command.CreateUserCommand;
+import com.pik.user.command.DeactivateUserCommand;
+import com.pik.user.event.UserActivatedEvent;
+import com.pik.user.event.UserChangePasswordEvent;
+import com.pik.user.event.UserCreatedEvent;
+import com.pik.user.event.UserDeactivatedEvent;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.Before;

@@ -2,24 +2,21 @@ package com.pik.handler;
 
 import com.pik.configuration.EmailConfig;
 import com.pik.dto.Mail;
-import com.pik.event.ResetPasswordCodeGeneratedEvent;
-import com.pik.event.UserCreatedEvent;
+import com.pik.password.event.ResetPasswordCodeGeneratedEvent;
 import com.pik.service.EmailService;
+import com.pik.user.event.UserCreatedEvent;
+import lombok.RequiredArgsConstructor;
 import org.axonframework.eventhandling.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class EmailEventManager {
     private final EmailConfig emailConfig;
     private final EmailService emailService;
     private final Logger logger = LoggerFactory.getLogger(EmailEventManager.class);
-
-    public EmailEventManager(EmailService emailService, EmailConfig emailConfig) {
-        this.emailService = emailService;
-        this.emailConfig = emailConfig;
-    }
 
     @EventHandler
     private void on(UserCreatedEvent event) {
@@ -32,7 +29,7 @@ public class EmailEventManager {
 
     @EventHandler
     private void on(ResetPasswordCodeGeneratedEvent event) {
-        String message = event.token + " time " + event.expirationDate;
+        String message = event.token + " time ";
         Mail mail = new Mail(emailConfig.getAdminMail(), "Reset user password", message);
         // TODO: 23.09.2020 Comment method because I do not want to send email
 //        emailService.sendSimpleMessage(mail);

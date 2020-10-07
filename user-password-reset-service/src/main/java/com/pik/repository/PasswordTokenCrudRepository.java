@@ -1,6 +1,6 @@
 package com.pik.repository;
 
-import com.pik.aggregate.PasswordToken;
+import com.pik.domain.entity.PasswordToken;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

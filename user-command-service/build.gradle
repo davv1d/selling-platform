@@ -11,8 +11,7 @@ mainClassName = 'com.pik.UserCommandServiceApplication'
 
 dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.3.4.RELEASE'
-    compile project(':user-common-api')
-
+    compile project(':common-api')
     compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '4.4.2'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
@@ -23,7 +22,10 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+//    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+    compile 'com.h2database:h2'
 
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
