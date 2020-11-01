@@ -22,6 +22,7 @@ public class AdvertisementAggregateTest {
 
     @Test
     public void shouldCreateAdvertisement() {
+        LocalDateTime timeOfAdd = LocalDateTime.now();
         fixture.givenNoPriorActivity()
                 .when(new CreateAdvertisementCommand(
                         "id",
@@ -32,7 +33,7 @@ public class AdvertisementAggregateTest {
                         "location",
                         10,
                         new BigDecimal("100"),
-                        LocalDateTime.now(),
+                        timeOfAdd,
                         AdvertisementStatus.ACTIVE.toString(),
                         new ArrayList<>()))
                 .expectSuccessfulHandlerExecution()
@@ -45,7 +46,7 @@ public class AdvertisementAggregateTest {
                         "location",
                         10,
                         new BigDecimal("100"),
-                        LocalDateTime.now(),
+                        timeOfAdd,
                         AdvertisementStatus.ACTIVE.toString(),
                         new ArrayList<>()));
     }
@@ -150,9 +151,7 @@ public class AdvertisementAggregateTest {
                 .when(new AddAdvertisementPhotosCommand("id", testPhotoList))
                 .expectSuccessfulHandlerExecution()
                 .expectEvents(new AdvertisementPhotoAddedEvent("id", testPhotoList))
-                .expectState(ad -> {
-                    Assert.assertEquals(1, ad.getPhotoEntities().size());
-                });
+                .expectState(ad -> Assert.assertEquals(1, ad.getPhotoEntities().size()));
     }
 
 
@@ -195,9 +194,7 @@ public class AdvertisementAggregateTest {
                 .when(new DeleteAdvertisementPhotoCommand("id", testPhotosIdsList))
                 .expectSuccessfulHandlerExecution()
                 .expectEvents(new AdvertisementPhotoDeletedEvent("id", testPhotosIdsList))
-                .expectState(ad -> {
-                    Assert.assertEquals(1, ad.getPhotoEntities().size());
-                });
+                .expectState(ad -> Assert.assertEquals(1, ad.getPhotoEntities().size()));
     }
 
     @Test
