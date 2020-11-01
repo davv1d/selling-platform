@@ -11,4 +11,6 @@ include 'photo-upload-service'
 include 'common-api'
 include 'advertisement-query-service'
 include 'category-query-service'
+include 'websocket-service'
+include 'message-service'
 
