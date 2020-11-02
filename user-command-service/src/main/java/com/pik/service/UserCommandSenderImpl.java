@@ -1,6 +1,7 @@
 package com.pik.service;
 
 import com.pik.dto.UserDto;
+import com.pik.user.UserRole;
 import com.pik.user.UserStatus;
 import com.pik.user.command.ActivateUserCommand;
 import com.pik.user.command.CreateUserCommand;
@@ -21,19 +22,30 @@ public class UserCommandSenderImpl implements UserCommandSender {
 
     @Override
     public CompletableFuture<String> createUser(UserDto userDto) {
+        CreateUserCommand userCommand = createUserCommand(userDto, UserRole.USER);
+        return this.commandGateway.send(userCommand);
+    }
+
+    @Override
+    public CompletableFuture<String> createAdmin(UserDto userDto) {
+        CreateUserCommand userCommand = createUserCommand(userDto, UserRole.ADMIN);
+        return this.commandGateway.send(userCommand);
+    }
+
+    private CreateUserCommand createUserCommand(UserDto userDto, UserRole role) {
         String userId = UUID.randomUUID().toString();
         String status = UserStatus.INITIALIZE.toString();
         String password = this.passwordEncoder.encode(userDto.getPassword());
-        return this.commandGateway.send(new CreateUserCommand(userId, userDto.getEmail(), password, status));
+        return new CreateUserCommand(userId, userDto.getEmail(), password, role.toString(),status);
     }
 
     @Override
-    public CompletableFuture<String> activateUser(String userId) {
-        return this.commandGateway.send(new ActivateUserCommand(userId));
+    public void activateUser(String userId) {
+        this.commandGateway.send(new ActivateUserCommand(userId));
     }
 
     @Override
-    public CompletableFuture<String> deactivateUser(String userId) {
-        return this.commandGateway.send(new DeactivateUserCommand(userId));
+    public void deactivateUser(String userId) {
+        this.commandGateway.send(new DeactivateUserCommand(userId));
     }
 }

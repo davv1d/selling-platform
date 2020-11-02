@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface UserCommandSender {
     CompletableFuture<String> createUser(UserDto userDto);
-    CompletableFuture<String> activateUser(String userId);
-    CompletableFuture<String> deactivateUser(String userId);
+    CompletableFuture<String> createAdmin(UserDto userDto);
+    void activateUser(String userId);
+    void deactivateUser(String userId);
 }

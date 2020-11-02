@@ -1,5 +1,6 @@
 package com.pik.aggregate;
 
+import com.pik.user.UserRole;
 import com.pik.user.UserStatus;
 import com.pik.user.command.ActivateUserCommand;
 import com.pik.user.command.ChangeUserPasswordCommand;
@@ -28,13 +29,14 @@ public class UserAggregate {
     private String userId;
     private String email;
     private String password;
+    private UserRole role;
     private UserStatus status;
     private final transient Logger logger = LoggerFactory.getLogger(UserAggregate.class);
 
     @CommandHandler
-    public UserAggregate(CreateUserCommand command) {
-        logger.info("Create user with id: " + command.userId + " and email: " + command.email);
-        AggregateLifecycle.apply(new UserCreatedEvent(command.userId, command.email, command.password, command.status));
+    public UserAggregate(CreateUserCommand cmd) {
+        logger.info("Create user with id: " + cmd.userId + " and email: " + cmd.email);
+        AggregateLifecycle.apply(new UserCreatedEvent(cmd.userId, cmd.email, cmd.password, cmd.role, cmd.status));
     }
 
     @CommandHandler

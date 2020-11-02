@@ -1,10 +1,8 @@
 package com.pik.controller;
 
 import com.pik.dto.UserDto;
-import com.pik.error.ExceptionConverter;
 import com.pik.service.UserCommandSender;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -14,21 +12,24 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class UserCommandController {
     private final UserCommandSender userCommandSender;
-    private final ExceptionConverter<String> exceptionConverter;
 
     @PostMapping("create")
-    public CompletableFuture<ResponseEntity<?>> createUser(@RequestBody UserDto userDto) {
-        return this.userCommandSender.createUser(userDto).handle(exceptionConverter);
+    public CompletableFuture<String> createUser(@RequestBody UserDto userDto) {
+        return this.userCommandSender.createUser(userDto);
+    }
+
+    @PostMapping("create/admin")
+    public CompletableFuture<String> createAdmin(@RequestBody UserDto userDto) {
+        return this.userCommandSender.createAdmin(userDto);
     }
 
     @PutMapping("deactivate/{userId}")
-    public CompletableFuture<ResponseEntity<?>> deactivateUser(@PathVariable String userId) {
-        return this.userCommandSender.deactivateUser(userId).handle(exceptionConverter);
-
+    public void deactivateUser(@PathVariable String userId) {
+        this.userCommandSender.deactivateUser(userId);
     }
 
     @PutMapping("email/active/{userId}")
-    public CompletableFuture<ResponseEntity<?>> activateByEmail(@PathVariable String userId) {
-        return this.userCommandSender.activateUser(userId).handle(exceptionConverter);
+    public void activateByEmail(@PathVariable String userId) {
+        this.userCommandSender.activateUser(userId);
     }
 }

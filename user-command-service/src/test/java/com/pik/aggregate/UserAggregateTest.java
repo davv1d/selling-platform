@@ -1,5 +1,6 @@
 package com.pik.aggregate;
 
+import com.pik.user.UserRole;
 import com.pik.user.UserStatus;
 import com.pik.user.command.ActivateUserCommand;
 import com.pik.user.command.ChangeUserPasswordCommand;
@@ -29,15 +30,15 @@ public class UserAggregateTest {
     public void shouldReturnSuccessCreateUserCommand() {
         String userId = UUID.randomUUID().toString();
         fixture.givenNoPriorActivity()
-                .when(new CreateUserCommand(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()))
+                .when(new CreateUserCommand(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()))
                 .expectSuccessfulHandlerExecution()
-                .expectEvents(new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()));
+                .expectEvents(new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()));
     }
 
     @Test
     public void shouldReturnSuccessActivateUserCommand() {
         String userId = UUID.randomUUID().toString();
-        fixture.given(new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()))
+        fixture.given(new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()))
                 .when(new ActivateUserCommand(userId))
                 .expectSuccessfulHandlerExecution()
                 .expectEvents(new UserActivatedEvent(userId));
@@ -48,7 +49,7 @@ public class UserAggregateTest {
     public void shouldThrowError_TryActivateOfActivatedUser() {
         String userId = UUID.randomUUID().toString();
         fixture.given(
-                new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()),
+                new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()),
                 new UserActivatedEvent(userId))
                 .when(new ActivateUserCommand(userId))
                 .expectException(IllegalStateException.class);
@@ -58,7 +59,7 @@ public class UserAggregateTest {
     public void shouldReturnSuccessDeactivateUserCommand() {
         String userId = UUID.randomUUID().toString();
         fixture.given(
-                new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()),
+                new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()),
                 new UserActivatedEvent(userId))
                 .when(new DeactivateUserCommand(userId))
                 .expectSuccessfulHandlerExecution()
@@ -70,7 +71,7 @@ public class UserAggregateTest {
     public void shouldThrowError_DeactivateOfDeactivatedUser() {
         String userId = UUID.randomUUID().toString();
         fixture.given(
-                new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()),
+                new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()),
                 new UserDeactivatedEvent(userId))
                 .when(new DeactivateUserCommand(userId))
                 .expectException(IllegalStateException.class);
@@ -80,7 +81,7 @@ public class UserAggregateTest {
     public void shouldThrowError_DeactivateOfInitializedUser() {
         String userId = UUID.randomUUID().toString();
         fixture.given(
-                new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()))
+                new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()))
                 .when(new DeactivateUserCommand(userId))
                 .expectException(IllegalStateException.class);
     }
@@ -89,7 +90,7 @@ public class UserAggregateTest {
     public void shouldReturnSuccess_ChangeUserPassword() {
         String userId = UUID.randomUUID().toString();
         fixture.given(
-                new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()),
+                new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()),
                 new UserActivatedEvent(userId))
                 .when(new ChangeUserPasswordCommand(userId, "changed password"))
                 .expectSuccessfulHandlerExecution()
@@ -100,7 +101,7 @@ public class UserAggregateTest {
     public void shouldThrowError_ChangePasswordOfDeactivatedUser() {
         String userId = UUID.randomUUID().toString();
         fixture.given(
-                new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()),
+                new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()),
                 new UserDeactivatedEvent(userId))
                 .when(new ChangeUserPasswordCommand(userId, "changed password"))
                 .expectException(IllegalStateException.class);
@@ -110,7 +111,7 @@ public class UserAggregateTest {
     public void shouldThrowError_ChangePasswordOfInitializedUser() {
         String userId = UUID.randomUUID().toString();
         fixture.given(
-                new UserCreatedEvent(userId, "test@email.com", "password", UserStatus.INITIALIZE.toString()))
+                new UserCreatedEvent(userId, "test@email.com", "password", UserRole.USER.toString(), UserStatus.INITIALIZE.toString()))
                 .when(new ChangeUserPasswordCommand(userId, "changed password"))
                 .expectException(IllegalStateException.class);
     }
