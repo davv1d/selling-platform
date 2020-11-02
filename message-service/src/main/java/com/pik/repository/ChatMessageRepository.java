@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface MessageRepository extends CrudRepository<Message, String> {
+public interface ChatMessageRepository extends CrudRepository<Message, String> {
     List<Message> findByRecipientId(String recipientId);
 }
