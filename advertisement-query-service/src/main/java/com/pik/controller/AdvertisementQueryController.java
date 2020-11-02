@@ -22,23 +22,23 @@ import java.util.concurrent.CompletableFuture;
 public class AdvertisementQueryController {
     private final QueryGateway queryGateway;
 
-    @GetMapping("/get/{advertisementId}")
-    public CompletableFuture<AdvertisementEntityDto> getUserById(@PathVariable String advertisementId) {
-        return this.queryGateway.query(new FindAdvertisementById(advertisementId), ResponseTypes.instanceOf(AdvertisementEntityDto.class));
-    }
-
-    @GetMapping("/get")
-    public CompletableFuture<AdvertisementEntitiesListDto> getUsers() {
+    @GetMapping("/")
+    public CompletableFuture<AdvertisementEntitiesListDto> getAdvertisements() {
         return this.queryGateway.query(new FindAdvertisements(), ResponseTypes.instanceOf(AdvertisementEntitiesListDto.class));
     }
 
-    @GetMapping("/get/category/{categoryId}")
-    public CompletableFuture<AdvertisementEntitiesListDto> getAdvertisementByCategoryId(@PathVariable String categoryId) {
+    @GetMapping("/{advertisementId}")
+    public CompletableFuture<AdvertisementEntityDto> getAdvertisementById(@PathVariable String advertisementId) {
+        return this.queryGateway.query(new FindAdvertisementById(advertisementId), ResponseTypes.instanceOf(AdvertisementEntityDto.class));
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public CompletableFuture<AdvertisementEntitiesListDto> getAdvertisementsByCategoryId(@PathVariable String categoryId) {
         return this.queryGateway.query(new FindAdvertisementsByCategory(categoryId), ResponseTypes.instanceOf(AdvertisementEntitiesListDto.class));
     }
 
-    @GetMapping("/get/user/{userId}")
-    public CompletableFuture<AdvertisementEntitiesListDto> getAdvertisementByUserId(@PathVariable String userId) {
+    @GetMapping("/user/{userId}")
+    public CompletableFuture<AdvertisementEntitiesListDto> getAdvertisementsByUserId(@PathVariable String userId) {
         return this.queryGateway.query(new FindAdvertisementByUser(userId), ResponseTypes.instanceOf(AdvertisementEntitiesListDto.class));
     }
 }

@@ -11,18 +11,18 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@CrossOrigin
 @RequiredArgsConstructor
-public class ChatController {
+@RequestMapping("/")
+public class MessageController {
     private final MessageService messageService;
     private final MessageRepository messageRepository;
 
-    @PostMapping("/message")
+    @PostMapping("/")
     public CompletableFuture<String> sendMessage(@RequestBody MessageDto messageDto) {
         return messageService.sendMessage(messageDto);
     }
 
-    @GetMapping("/mess/{recipientId}")
+    @GetMapping("/{recipientId}")
     public List<Message> get(@PathVariable String recipientId) {
         return messageRepository.findByRecipientId(recipientId);
     }

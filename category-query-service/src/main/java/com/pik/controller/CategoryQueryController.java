@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public class CategoryQueryController {
     private final QueryGateway queryGateway;
 
-    @GetMapping("category/get")
+    @GetMapping("/")
     public CompletableFuture<CategoriesDtoList> getCategories() {
         return this.queryGateway.query(new FindCategories(), ResponseTypes.instanceOf(CategoriesDtoList.class));
     }

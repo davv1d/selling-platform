@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/")
 public class AdvertisementController {
     private final AdvertisementCommandSender advertisementCommandSender;
     private final EventStore eventStore;
@@ -35,7 +36,7 @@ public class AdvertisementController {
         this.advertisementCommandSender.sendChangeAdvertisementCommand(changeAdvertisementDto);
     }
 
-    @PutMapping("/add")
+    @PutMapping("/photo")
     public void addAdvertisementPhotos(@RequestBody AdvertisementPhotosDto advertisementPhotosDto) {
         this.advertisementCommandSender.sendAddPhotoCommand(advertisementPhotosDto);
     }

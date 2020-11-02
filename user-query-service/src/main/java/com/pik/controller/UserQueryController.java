@@ -29,22 +29,22 @@ public class UserQueryController {
     @Autowired
     EventStore eventStore;
 
-    @GetMapping("/get/{userId}")
+    @GetMapping("/{userId}")
     public CompletableFuture<UserDto> getUserById(@PathVariable String userId) {
         return this.queryGateway.query(new FindUserById(userId), ResponseTypes.instanceOf(UserDto.class));
     }
 
-    @GetMapping("/get")
+    @GetMapping("/")
     public CompletableFuture<UsersListDto> getUsers() {
         return this.queryGateway.query(new FindAllUsers(), ResponseTypes.instanceOf(UsersListDto.class));
     }
 
-    @GetMapping("/get/activate/email/{email}")
+    @GetMapping("/activate/email/{email}")
     public CompletableFuture<UserDto> getActivateUserByEmail(@PathVariable String email) {
         return this.queryGateway.query(new FindActivatedUserByEmail(email), ResponseTypes.instanceOf(UserDto.class));
     }
 
-    @GetMapping("/get/email/{email}")
+    @GetMapping("/email/{email}")
     public CompletableFuture<UserDto> getUserByEmail(@PathVariable String email) {
         return this.queryGateway.query(new FindUserByEmail(email), ResponseTypes.instanceOf(UserDto.class));
     }

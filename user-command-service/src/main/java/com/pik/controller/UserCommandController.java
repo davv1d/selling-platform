@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class UserCommandController {
