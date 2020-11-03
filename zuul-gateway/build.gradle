@@ -10,8 +10,12 @@ version '1.0-SNAPSHOT'
 mainClassName = 'com.pik.ZuulGatewayApplication'
 
 dependencies {
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.3.RELEASE'
-//    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+    compile project(':common-api')
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.3.RELEASE'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-zuul', version: '2.2.4.RELEASE'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

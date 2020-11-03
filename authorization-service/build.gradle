@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+}
+
+group 'com.pik'
+version '1.0-SNAPSHOT'
+mainClassName = 'com.davv1d.AuthorizationServiceApplication'
+
+
+dependencies {
+    compile project(':common-api')
+    compile group: 'org.axonframework', name: 'axon-spring-boot-starter', version: '4.4.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.3.3.RELEASE'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}

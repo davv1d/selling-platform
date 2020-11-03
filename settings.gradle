@@ -14,4 +14,5 @@ include 'category-query-service'
 include 'websocket-service'
 include 'message-service'
 include 'zuul-gateway'
+include 'authorization-service'
 
